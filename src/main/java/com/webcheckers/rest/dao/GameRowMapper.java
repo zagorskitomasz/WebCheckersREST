@@ -41,7 +41,7 @@ public class GameRowMapper implements RowMapper<Game>{
 		
 		Player player = new Player();
 		
-		player.setId(resultSet.getInt("PLAYER_" + color));
+		player.setId(resultSet.getInt("PL_" + color + "_ID"));
 		player.setLogin(resultSet.getString("PL_" + color + "_LOGIN"));
 		player.setPassword(resultSet.getString("PL_" + color + "_PASSWORD"));
 		player.setEmail(resultSet.getString("PL_" + color + "_EMAIL"));

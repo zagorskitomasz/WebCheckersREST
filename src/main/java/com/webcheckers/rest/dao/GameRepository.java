@@ -6,12 +6,17 @@ import com.webcheckers.rest.domain.Game;
 
 public interface GameRepository {
 	
-	public int insert(Game game);
-	public void updateById(Game game);
-	public void updateByName(Game game);
-	public void deleteById(Game game);
-	public void deleteByName(Game game);
-	public Game selectOneById(int id);
-	public Game selectOneByName(String name);
-	public List<Game> selectWhere(String clause);
+	public boolean insert(Game game);
+	
+	public boolean updateStateByName(Game game);
+	public boolean updateStateById(Game game);
+	
+	public boolean delete(long id);
+	public boolean delete(String name);
+	
+	public Game selectOne(long id);
+	public Game selectOne(String name);
+	
+	public List<Game> selectAll();
+	public List<Game> selectAll(String filter);
 }

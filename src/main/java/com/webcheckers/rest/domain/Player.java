@@ -2,19 +2,19 @@ package com.webcheckers.rest.domain;
 
 public class Player {
 
-	private int id;
+	private long id;
 	private String login;
 	private String password;
 	private String email;
 
 	public Player() {}
 
-	public Player(int id) {
+	public Player(long id) {
 
 		this.id = id;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

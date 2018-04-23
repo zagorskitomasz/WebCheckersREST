@@ -2,7 +2,7 @@ package com.webcheckers.rest.domain;
 
 public class Game {
 
-	private int id;
+	private long id;
 	private String name;
 	private String password;
 	private String state;
@@ -11,11 +11,11 @@ public class Game {
 
 	public Game() {}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
