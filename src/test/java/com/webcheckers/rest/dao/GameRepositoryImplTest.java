@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.webcheckers.rest.domain.Game;
 import com.webcheckers.rest.domain.Player;
@@ -18,8 +20,10 @@ public class GameRepositoryImplTest {
 
 	@Autowired
 	private GameRepository gameRepository;
-	
+
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void insertDefSelectOneDelete() {
 		
 		Game game = new Game();
@@ -35,33 +39,35 @@ public class GameRepositoryImplTest {
 		
 		gameRepository.delete(selected.getId());
 	}
-	
+
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void insertUpdateSelectWhereDelete() {
-		
+
 		Game game1 = new Game();
 		game1.setName("TEST_N1");
 		game1.setState("TEST_P1");
 		game1.setPlayerBlack(new Player(1));
 		game1.setPlayerWhite(new Player(1));
-		
+
 		Game game2 = new Game();
 		game2.setName("TEST_N2");
 		game2.setState("TEST_P2");
 		game2.setPlayerBlack(new Player(1));
 		game2.setPlayerWhite(new Player(1));
-		
+
 		gameRepository.insert(game1);
 		gameRepository.insert(game2);
-		
+
 		game2.setState("TEST_P1");
-		
+
 		gameRepository.updateStateByName(game2);
-		
+
 		List<Game> games = gameRepository.selectAll(" G.STATE = 'TEST_P1'");
-		
+
 		Assert.assertTrue(2 == games.size());
-		
+
 		games.forEach(game -> gameRepository.delete(game.getId()));
 	}
 }

@@ -19,4 +19,6 @@ public interface GameRepository {
 	
 	public List<Game> selectAll();
 	public List<Game> selectAll(String filter);
+	
+	public boolean executeUpdate(String query);
 }
