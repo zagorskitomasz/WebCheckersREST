@@ -6,46 +6,25 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.webcheckers.rest.domain.Game;
-import com.webcheckers.rest.domain.Player;
+import com.webcheckers.rest.domain.LightGame;
 
 @Component
-public class GameRowMapper implements RowMapper<Game>{
+public class GameRowMapper implements RowMapper<LightGame>{
 
 	@Override
-	public Game mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+	public LightGame mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
 		
-		Player playerBlack = mapPlayer(resultSet, "BLACK");
-		Player playerWhite = mapPlayer(resultSet, "WHITE");
-		
-		Game game = mapGame(resultSet);
-		
-		game.setPlayerBlack(playerBlack);
-		game.setPlayerWhite(playerWhite);
+		LightGame game = mapGame(resultSet);
 		
 		return game;
 	}
 
-	private Game mapGame(ResultSet resultSet) throws SQLException {
+	private LightGame mapGame(ResultSet resultSet) throws SQLException {
 		
-		Game game = new Game();
+		LightGame game = new LightGame();
 		game.setId(resultSet.getInt("ID"));
-		game.setName(resultSet.getString("NAME"));
-		game.setPassword(resultSet.getString("PASSWORD"));
 		game.setState(resultSet.getString("STATE"));
 		
 		return game;
-	}
-
-	private Player mapPlayer(ResultSet resultSet, String color) throws SQLException {
-		
-		Player player = new Player();
-		
-		player.setId(resultSet.getInt("PL_" + color + "_ID"));
-		player.setLogin(resultSet.getString("PL_" + color + "_LOGIN"));
-		player.setPassword(resultSet.getString("PL_" + color + "_PASSWORD"));
-		player.setEmail(resultSet.getString("PL_" + color + "_EMAIL"));
-		
-		return player;
 	}
 }
