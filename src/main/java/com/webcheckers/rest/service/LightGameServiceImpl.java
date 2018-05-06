@@ -1,10 +1,12 @@
 package com.webcheckers.rest.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.webcheckers.rest.dao.LightGameRepository;
 import com.webcheckers.rest.domain.LightGame;
 
+@Service
 public class LightGameServiceImpl implements LightGameService{
 	
 	private static final String ARCHIVISE_QUERY = " CALL ARCHIVISE(:ID, :WINNER) ";
@@ -19,18 +21,18 @@ public class LightGameServiceImpl implements LightGameService{
 	}
 	
 	@Override
-	public void saveGame(LightGame game) {
+	public boolean saveGame(LightGame game) {
 		
 		if(game.getWinner() != null && "WwBb".contains(game.getWinner()))
-			archivise(game);
+			return archivise(game);
 		else
-			repository.updateState(game);
+			return repository.updateState(game);
 	}
 	
-	private void archivise(LightGame game) {
+	private boolean archivise(LightGame game) {
 		
-		repository.executeUpdate(ARCHIVISE_QUERY
+		return repository.executeUpdate(ARCHIVISE_QUERY
 				.replaceAll(":ID", String.valueOf(game.getId()))
-				.replaceAll(":WINNER", game.getWinner()));
+				.replaceAll(":WINNER", "'" + game.getWinner() + "'"));
 	}
 }
