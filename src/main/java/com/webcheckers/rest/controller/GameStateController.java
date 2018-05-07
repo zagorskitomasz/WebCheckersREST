@@ -43,6 +43,9 @@ public class GameStateController {
 			throw new CantSaveGameException(game.getId());
 	}
 	
+	@RequestMapping("/wake-up")
+	public void wakeUp() {}
+	
 	@ExceptionHandler(GameNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String gameNotFound(GameNotFoundException ex) {
