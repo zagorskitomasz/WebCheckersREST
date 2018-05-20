@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webcheckers.rest.domain.GameStarter;
 import com.webcheckers.rest.domain.LightGame;
+import com.webcheckers.rest.exceptions.CantCreateGameException;
 import com.webcheckers.rest.exceptions.CantSaveGameException;
 import com.webcheckers.rest.exceptions.GameNotFoundException;
 import com.webcheckers.rest.service.LightGameService;
@@ -43,6 +45,13 @@ public class GameStateController {
 			throw new CantSaveGameException(game.getId());
 	}
 	
+	@PostMapping("/create")
+	public void createGame(@RequestBody GameStarter game) {
+		
+		if(!service.createGame(game))
+			throw new CantCreateGameException(game.getId());
+	}
+	
 	@RequestMapping("/wake-up")
 	public void wakeUp() {}
 	
@@ -56,6 +65,13 @@ public class GameStateController {
 	@ExceptionHandler(CantSaveGameException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public String cantSaveGame(CantSaveGameException ex) {
+		
+		return ex.getMessage();
+	}
+	
+	@ExceptionHandler(CantCreateGameException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public String cantCreateGame(CantCreateGameException ex) {
 		
 		return ex.getMessage();
 	}

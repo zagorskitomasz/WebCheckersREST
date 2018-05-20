@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.webcheckers.rest.dao.LightGameRepository;
+import com.webcheckers.rest.domain.GameStarter;
 import com.webcheckers.rest.domain.LightGame;
 
 @Service
@@ -34,5 +35,11 @@ public class LightGameServiceImpl implements LightGameService{
 		return repository.executeUpdate(ARCHIVISE_QUERY
 				.replaceAll(":ID", String.valueOf(game.getId()))
 				.replaceAll(":WINNER", "'" + game.getWinner() + "'"));
+	}
+
+	@Override
+	public boolean createGame(GameStarter game) {
+		
+		return repository.insert(game);
 	}
 }

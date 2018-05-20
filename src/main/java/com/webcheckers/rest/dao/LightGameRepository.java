@@ -1,9 +1,11 @@
 package com.webcheckers.rest.dao;
 
+import com.webcheckers.rest.domain.GameStarter;
 import com.webcheckers.rest.domain.LightGame;
 
 public interface LightGameRepository {
 	
+	public boolean insert(GameStarter game);
 	public boolean insert(LightGame game);
 	public boolean updateState(LightGame game);
 	public boolean delete(int id);
